@@ -2,13 +2,19 @@
 
 <head>
 
-    <title>Open SonATA Installation Guide</title>
+    <center><title>Open SonATA Installation Guide</title></center>
+
 
 </head>
 
 <body>
 
-    <h1>Open SonATA Installation Guide</h1>
+    <TABLE width=100%>
+        <TR><TD><img src="images/setiquest_logo.gif" /> </TD>
+    <TD align=left style='margin:20px;'> <h1>Open SonATA Installation Guide</h1></TD>
+    </TR>
+    </TABLE>
+<center>Version 1.0, March 1, 2011</center>
 
     <h2>Minimum Hardware requirements</h2>
 
@@ -65,7 +71,7 @@
 	        <li>tcl 8.5.7</li>
         </ul>
 
-	<p>Optional packages. It is suggested you do not worry about these until you are advanced enough with the software to understand how to use them. Also, one of the project goals is to furhter documentation in this area.
+	<p>Optional packages. It is suggested you do not worry about these until you are advanced enough with the software to understand how to use them. Also, one goal of the project is to further documentation in this area.
 
     <ul>
         <li>doxygen 1.2.10 (creating automated documentation)</li>
@@ -135,7 +141,7 @@
     <p>You must allow your account to run sudo without having to enter a password:
         <ul>
             <li>as root, edit /etc/sudoers</li>
-            <li>Add the following entry: &quot;<user> ALL=(ALL) NOPASSWD: ALL&quot;, where <user> is the user name of the account you will run SonATA.</li>
+            <li>Add the following entry: &quot;<user> ALL=(ALL) NOPASSWD: ALL&quot;, where &lt;user&gt; is the user name of the account you will run SonATA in.</li>
         </ul>
 
     <p>Install a version of the .sserc file in your home directory:
@@ -153,77 +159,11 @@
 
    <h2>Running SonATA</h2>
 
-	1. Install a version of the .sserc file in your home directory:
+	<p>Use the 'runsse.sh' script to start things up, e.g., to run in all-simulator mode type:
 
-		% cp <gitroot>/OpenSonATA/sse-pkg/util/example.sserc.tcl ~/.sserc
+		<ul>
+            <li>% runsse.sh </li>
+        </ul>
 
-	Note that you MUST specify the location of the
-	tclreadline 9.9.0 shared library in order for the seeker's tcl
-	interpreter to find it.  You can do this by uncommenting
-	appropriate line in your .sserc file:
-
-		#lappend ::auto_path /usr/lib
-		#lappend ::auto_path /usr/local/lib
-
-	2. Additions to your shell rc file
-
-	Update your LD_LIBRARY_PATH:
-
-	setenv $ACE_ROOT /usr/local/ACE_wrappers
-	setenv LD_LIBRARY_PATH "$ACE_ROOT/ace:$ACE_ROOT/lib:$LD_LIBRARY_PATH"
-	setenv LD_LIBRARY_PATH "usr/local/lib:$LD_LIBRARY_PATH"
-	setenv LD_LIBRARY_PATH "usr/lib64:$LD_LIBRARY_PATH"
-
-	Update your PATH:
-
-	setenv PATH "~/sonata_install/bin:$PATH"
-
-	In order to run SonATA, the stacksize must be changed to unlimited.
-	The following command should be added to your shell rc file.
-
-		limit stacksize unlimited
-
-	3. Use the 'runsse.sh' script to start things up,
-	e.g., to run in all-simulator mode type:
-
-		% runsse.sh 
-
-	You can also use 'runsse.sh -help' to see all
-	the startup options.
-
-	4. If you want to use the sse with the mysql database, here's
-	how to set it up:
-
-	% mysqladmin create sonata_iftest
-	% mysql sonata_iftest < sse-pkg/database/seeker.schema
-
-	5. There are several optional environment variables that can
-	be used to override the default locations for various files:
-
-	SSE_INITRC - seeker startup file.
-   	Default: ~/.sserc
-
-	SSE_SETUP - directory of config files.
-   	Default: ~/sse_install/setup
-
-	SSE_ARCHIVE - directory root for created data files.
-   	Default: ~/sse_archive
-
-	6. Other environment variables that can override program
-	configuration defaults:
-
-	SSE_DEBUG_LOG_MAX_FILESIZE_MEGABYTES
-   	Default: 25
-
-	CONTROL_COMPONENTS_TSCOPE_HOST
-   	Default: seeker host
-	
-	CONTROL_COMPONENTS_ANT_CONTROL_HOST
-   	Default: antcntl.atarray.org
-	
-	CONTROL_COMPONENTS_PDM_ARCHx_HOST
-   	Default: seeker host
-	
-	RUNSSE_FONT
-	Default: 9x15
+	<p>You can also use 'runsse.sh -help' to see all the startup options.
 
