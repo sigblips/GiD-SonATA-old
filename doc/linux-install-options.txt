@@ -1,243 +1,157 @@
-Open SonATA Installation Guide
+<html>
 
-0. Minimum Hardware requirements
-	1. At least 2 64-bit processors with sse3 capability
-	2. 4 GB memory
+<head>
 
-1.64-bit OpenSuSE 10.3 is the recommended Linux distribution. 
-  OpenSuSE 11.1 will also work for development, but 10.3 promises
-  to yield better performance for realtime operation.
+    <title>Open SonATA Installation Guide</title>
 
+</head>
 
-2.Linux software selection standard except:
-	1.Gnome desktop
-	2.No AppArmor
-	3.No multimedia software
-	4.No office software
-	5.No graphics software
-	6.Add XFCE
-	7.Add basic development
-	8.Add kernel development
-	9.Add C/C++ development
+<body>
+
+    <h1>Open SonATA Installation Guide</h1>
+
+    <h2>Minimum Hardware requirements</h2>
+
+    <ul>
+        <li>At least 2 64-bit processors with sse3 capability</li>
+        <li>4 GB memory</li>
+        <li>64-bit OpenSuSE 11.3 is the recommended Linux distribution. OpenSuSE 11.1 will also work for development, but 11.3 is currently what we are developing with.</li>
+    </ul>
 
 
-3. Package dependencies
-	(SonATA is known to build with the specified versions):
+    <h2>Minimum software necessary</h2>
 
-	These packages should be available from the Linux Distribution
+    <p>If you are installing a fresh install of Linux, the standard install is recommended except:
 
-		gcc 4.3.2, 4.3.3
-		automake 1.8.4
-		autoconf 2.59
-		libtool 1.5.6
-		m4 1.4
-		java, javac 1.4.2, 1.5.0
-		tcl 8.3, 8.4, 8.5
-		mysql 3.23.55, 4.0.20, 4.1.7, 4.1.10, 5.0.22
-		swig 1.3.21, 1.3.31
-		expect 5.26
-		gnu readline (2.2, 5.2)  -- needed for tclreadline
-
-	These packages can be downloaded from the URL given.
-
-	ACE 5.6.1, 5.7.1	http://www.cse.wustl.edu/~schmidt/ACE.html
-	fftw 3.2.1		http://www.fftw.org/download.html
-	xtail			http://www.unicom.com/sw/xtail
-
-	The following library is available from the 
-	OpenSonATA distribution on GitHub:
-
-	tclreadline 9.9.0 (command line editing in the seeker, see below)
-
-	Optional packages:
-
-	CppUnit 1.5 (unit testing) - also available from 
-		OpenSonATA distribution on GitHub
-	doxygen 1.2.10 (creating automated documentation)
-	stlport 4.6.2 (debugging STL related problems)
-	pp3, tex, ImageMagick (for making starmaps)
-	Apache Tomcat 5.0.28 (for web control/monitor interface)
+    <ul>
+	    <li>Select Gnome desktop
+	    <li>No AppArmor
+	    <li>No multimedia software
+	    <li>No office software
+	    <li>No graphics software
+	    <li>Add XFCE
+	    <li>Add basic development
+	    <li>Add kernel development
+	    <li>Add C/C++ development
+    </ul>
 
 
-4. Package Installations
+    <h2>Package dependencies</h2>
 
-   A. Install gcc-4.3.3.
-	We strongly recommended gcc-4.3.3, because it generates noticeably 
-	faster code than older versions, and versions much older than 4.2.3 
-	will probably not support the vector instructions used. 
+	<b>SonATA is known to build with the specified versions:</b>
 
-	1.Build and install gmp-4.2.4.
-	  [./configure; make; make check; sudo make install]
-	2.Build and install mpfr-2.4.0 
-	  [./configure; make; make check; sudo make install]
-	3.Build and install gcc-4.3.3 
-	  [../gcc-4.3.3/configure --enable-threads --enable-languages=c,c++; 
-	  make bootstrap; sudo make install]
+	<p>These packages should be available from the Linux Distribution. Install them if appropriate.
+    <BR>
 
-   B.Build and install fftw-3.2.1 
-	Go to http://www.fftw.org/download.html
-	Download FFTW 3.2.1 as /tmp/fftw-3.2.1.tar.gz
-	cd /usr/local (as root)
-	tar -zxpf /tmp/fftw-3.2.1.tar.gz
- 	cd fftw-3.2.1
-        ./configure --enable-threads --enable-float --enable-sse --disable-fortran; 
-	make 
-	make check 
-	sudo make install
+		<ul>
+            <li>gcc 4.3.3 or 4.5.2
+            <ul>
+                <li>Note about the version of GCC compiler to use: We are currently using GCC version 4.5.2. We standardize on this GCC version to avoid introducing unknown variations in our system. We have only tested GCC versions 4.3.3 and 4.5.2. Versions previous to version 4.3.3 are discouraged. Any GCC version > 4.3.3 will quite possibly work, but we can not support this. Use of GCC version 4.3.3 or 4.5.2 is highly recommended. All GCC versions can be obtained from <a href="http://gcc.gnu.org/releases.html" target="_other">gcc.gnu.org/releases.html</a>.</li>
+            </ul></li>
 
-   C.Build and install ACE 5.6.1
+		    <li>Java JDK, version 5 or 6. See <a href="http://www.oracle.com/technetwork/java/javase/downloads/index-jdk5-jsp-142662.html" target="_other">www.oracle.com/technetwork/java/javase/downloads/index-jdk5-jsp-142662.html</a> or <a href="https://cds.sun.com/is-bin/INTERSHOP.enfinity/WFS/CDS-CDS_Developer-Site/en_US/-/USD/ViewProductDetail-Start?ProductRef=jdk-6u23-oth-JPR@CDS-CDS_Developer" target="_other">cds.sun.com/is-bin/INTERSHOP.enfinity/WFS/CDS-CDS_Developer-Site/en_US/-/USD/ViewProductDetail-Start?ProductRef=jdk-6u23-oth-JPR@CDS-CDS_Developer</a>for JDK download details.</li>
+		    <li>mysql server, see <a href="http://dev.mysql.com/downloads/mysql/" target="_other">dev.mysql.com/downloads/mysql/</a> for download details, or the linux distribution will contain a recent enough version. NOTE: MySQL is oly necessary if you are running the seeker program (you'll learn about the seeker in subsequent documentation) in a mode that requires the catalog of available observation targets. You will only need to do this in advanced mode.</li>
+        </ul>
 
-	ACE: ADAPTIVE Communication Environment
-	http://www.cse.wustl.edu/~schmidt/ACE.html
+    <p>These get installed by running the script <b>&quot;script/get_packages&quot;</b> from the SonATA directory. Run this script once to install these:
+        
+        <ul> 
+		    <li>swig 1.3.31</li>
+		    <li>expect 5.44.1.15</li>
+		    <li>gnu readline 5.2</li>
+	        <li>ACE 5.7.8</li>
+	        <li>fftw 3.2.1</li>
+	        <li>xtail 2.1</li>
+	        <li>tcl 8.5.7</li>
+        </ul>
 
-	The following instructions are distilled from the 
-	ACE_wrappers/ACE-INSTALL.html file
-	section: "Using the Traditional ACE/GNU Configuration"
+	<p>Optional packages. It is suggested you do not worry about these until you are advanced enough with the software to understand how to use them. Also, one of the project goals is to furhter documentation in this area.
 
-	1. Download the lastest BFO Micro Release, ACE-5.7.1.tar.gz, 
-	from the Obtaining ACE web page: http://download.dre.vanderbilt.edu
-   	and unpack to a local directory,
-   	e.g. ~/ace
-	
-   	It should unpack an "ACE_wrappers" subdirectory.
-	
-	2. set the ACE_ROOT env var:
-	
-   	setenv ACE_ROOT ~/ace/ACE_wrappers
-
-	3. create a "config.h" link to an appropriate config file
-
-   	cd $ACE_ROOT/ace
-   	ln -s config-linux.h config.h
-
-	4. create a "platform_macros.GNU" link to an appropriate file
-
-   	cd $ACE_ROOT/include/makeinclude
-   	ln -s platform_linux.GNU platform_macros.GNU
-
-	5. Only build the subset of ace needed:
-
-   	cd $ACE_ROOT/ace
-   	make
-
-	6. Once the build completes, copy everything from
-   	$ACE_ROOT to /usr/local/ACE_Wrappers
-
-	7. Add the ACE library to your LD_LIBRARY_PATH,
-	e.g.,
-
-   	setenv ACE_ROOT /usr/local/ACE_wrappers
-  	setenv LD_LIBRARY_PATH "$ACE_ROOT/ace:$ACE_ROOT/lib:$LD_LIBRARY_PATH"
-
-   C. Build and install mysql 5.0.22
-
-    	The seeker software requires that the mysqld server run with a
-	timezone of UTC.
-
-   D. Build and install java (1.4.2, 1.5.0, or later) and javac
+    <ul>
+        <li>doxygen 1.2.10 (creating automated documentation)</li>
+	    <li>stlport 4.6.2 (debugging STL related problems)</li>
+	    <li>pp3, tex, ImageMagick (for making starmaps)</li>
+	    <li>Apache Tomcat 5.0.28 (If you wish to build and run the SonATA build interface)</li>
+    </ul>
 
 
-5. Install the SonATA software. 
+    <h2>Download, Build, and Install the SonATA software. </h2>
 
-     A. Download from GitHub
+        <h3>Download</h3>
+        <ul>
+            <li>Create an account on github.com if you already do not have one.</li>
+            <li>Create a fork of the &quot;setiQuest/SonATA&quot; project.</li>
+            <li>You need to have Git installed on your computer. Refer to the instructions in GitHub.com for proper Git usage and operation.</li>
+            <li>Clone your fork onto your local computer.</li>
+        </ul>
 
-	Set up ssh keys with ssh keygen
-	in ~/.ssh directory:
- 	ssh-keygen -t dsa [-C comment] [-f output_keyfile]
+        <h3>Build and Install</h3>
+        <ul>
+            <li>Build CppUnit
+                <ul>
+		            <li>% cd CppUnit</li>
+		            <li>% ./reconfig --prefix /usr/local/CppUnit</li>
+		            <li>% make check</li>
+		            <li>% sudo make install</li>
+                </ul>
+            </li>
 
-	Set up a GitHub account at http://github.com/SETI/OpenSonATA.
-	Enter your public key (output_keyfile.pub) on your account at GitHub.
+            <li>sse-pkg	(single host environment or sse host)
+                <ul>
+			        <li>% cd sse-pkg</li>
+			        <li>% ./reconfig</li>
+			        <li>% make</li>
+			        <li>% make install</li>
+                </ul>
+            </li>
+		    
+            <li>sig-pkg
+			    <ul>
+                    <li>% cd ../sig-pkg</li>
+			        <li>% ./reconfig</li>
+			        <li>% make</li>
+			        <li>% make install</li>
+                </ul>
+            </li>
+        </ul>
 
-	On your computer, use git config to set up your name and email address.
 
-		git config --global user.name "Your Name Here"
-		git config --global user.email "you@yourdomain.example.com"
 
-	Clone the OpenSonATA package from GitHub:
+    <p>Your environment must be set up correctly for proper operation:
 
-		mkdir <gitroot>
-		cd  <gitroot>
-		git clone git@github.com:SETI/OpenSonATA.git
-		git checkout -b <workingbranch>
+    <ul>
+        <li>If you are running bash, add this to your .bashrc:
+            <ul>
+                <li></li>
+            </ul>
+        </li>
+        <li>If you are running csh, add this to you .cshrc:
+            <ul>
+                <li></li>
+            </ul>
+        </li>
+    </ul>
 
-	The <gitroot> directory will contain the OpenSonATA directory
-	which contains:
-		CppUnit
-		sig-data
-		sig-pkg
-		sse-data
-		sse-pkg
-		tclreadline
+    <p>You must allow your account to run sudo without having to enter a password:
+        <ul>
+            <li>as root, edit /etc/sudoers</li>
+            <li>Add the following entry: &quot;<user> ALL=(ALL) NOPASSWD: ALL&quot;, where <user> is the user name of the account you will run SonATA.</li>
+        </ul>
 
-     B. Build and install CppUnit 1.5 (unit testing) - 
-	available from SETI source code server
-	From the OpenSonATA directory,
+    <p>Install a version of the .sserc file in your home directory:
 
-		% cd CppUnit
-		% ./reconfig --prefix /usr/local/CppUnit
-		% make check
-		% sudo make install
+        <ul>
+            <li>% cp <gitroot>/OpenSonATA/sse-pkg/util/example.sserc.tcl ~/.sserc</li>
+            <li>Note that you MUST specify the location of the tclreadline 9.9.0 shared library in order for the seeker's tcl interpreter to find it.  You can do this by uncommenting appropriate line in your .sserc file:</li>
+            <ul>
+                <li>#lappend ::auto_path /usr/lib</li>
+                <li>#lappend ::auto_path /usr/local/lib</li>
+            </ul>
+            </li>
+        </ul>
 
-     C. Install tclreadline 9.9.0 
-	(use for command line editing in the seeker, see below)
 
-	This version of tclreadline (originally rev 2.1.0)
-	was modified to disable signal handling in the
-	underlying GNU readline, to avoid conflicts with signal
-	handling done elsewhere.
-
-	Also a tclreadline::LoopOneLine routine
-	was added to tclreadlineSetup.tcl.  This is a variation
-	on the ::Loop routine that does not allow multiline input
-	(ie, no secondary input prompts), as a way to prevent
-	users from getting trapped in a tcl input mode.
-
-	Make sure tcl & GNU readline are already installed.
-
-	tclreadline will install in /usr by default.  You may want to put
-	it elsewhere, e.g. /usr/local.  You may also need
-	to specify where the tcl files are using --with-tcl,
-	and which terminal library to use, using --with-tlib-library.
-
-	Example configuration:
-
-  	% ./reconfig --with-tcl=/usr/lib64 --with-tlib-library="-lncurses"
-		--prefix /usr/local
-
-  	% make install
-
-	Update LD_LIBRARY_PATH if needed:
-
-  	%setenv LD_LIBRARY_PATH "/usr/local/lib:$LD_LIBRARY_PATH"
-
-   D. Build the SonATA software
-
-	It is necessary to build the SSE software before the detector software.
-	From the OpenSonATA directory,
-
-		1.sse-pkg	(single host environment or sse host)
-			% cd sse-pkg
-			% ./reconfig
-			% make
-			% make install
-		1a.sse-pkg	(multihost environment, non-sse host)
-			% cd sse-pkg
-			% ./reconfig --pdmlibsonly
-			% make
-			% make install
-		2.sig-pkg
-			% cd ../sig-pkg
-			% ./reconfig
-			% make
-			% make install
-
-		 To build the sig-pkg for debugging:
-			% ./configure --enable-debug
-			% make clean
-			% make
-			% make install
-
-   E. Running SonATA
+   <h2>Running SonATA</h2>
 
 	1. Install a version of the .sserc file in your home directory:
 
